@@ -15,12 +15,16 @@
     <div class="container">
         <div class="row">
             <div class="col-md-5">
-                <form th:action="@{/courses/add-course}" method="POST">
-
+                    <section>
+                        <form th:action="@{/courses/add-course}" method="POST">
+                            <div th:each="teacher: ${teachers}"> <input type="radio" name="teacher" th:value="${teacher.getId()}" th:text="${teacher.getName()}+' '+${teacher.getSurname()}"/> </div>
+                            <label for='name'>Course name:</label><input id='name' type='text' name='name'/><br/>
+                            <label for='description'>Course description:</label><input id='description' type='text' name='description'/><br/>
+                        </form>
+                    </section>
 
                     <button id="submit" type="submit" class="btn btn-primary">Submit</button>
                     <a type="button" class="btn btn-primary" href="/courses">Back</a>
-                </form>
             </div>
         </div>
     </div>

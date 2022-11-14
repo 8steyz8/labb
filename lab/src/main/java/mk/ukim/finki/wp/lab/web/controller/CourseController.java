@@ -19,8 +19,9 @@ public class CourseController {
     public final CourseService courseService;
     private TeacherService teacherService;
 
-    public CourseController(CourseService courseService) {
+    public CourseController(CourseService courseService,TeacherService teacherService ) {
         this.courseService = courseService;
+        this.teacherService=teacherService;
     }
 
     @GetMapping
