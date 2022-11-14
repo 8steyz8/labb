@@ -1,0 +1,102 @@
+<html lang="mk" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Add new Student to Course</title>
+    <style type = "text/css">
+        body {
+            width: 800px;
+            margin: auto;
+        }
+        table {
+            width:100%;
+        }
+        table, td, th {
+            border: 1px solid black;
+            padding:3px 2px;
+        }
+        section {
+            float: left;
+            margin: 0 1.5%;
+            width: 63%;
+        }
+        aside {
+            float: right;
+            margin: 0 1.5%;
+            width: 30%;
+        }
+
+
+    </style>
+
+    <script>
+
+        $(document).ready( function() {
+            document.getElementById("create").style.display="none";
+        });
+        function showCreate(){
+            document.getElementById("create").style.display= "block";
+
+        }
+        function hideCreate()
+        {
+            document.getElementById("create").style.display= "none";
+        }
+
+    </script>
+
+</head>
+<body>
+<header>
+    <h1>Student Enrollment - Select the Student </h1>
+</header>
+<section>
+<!--    <form th:action="@{/CreateStudent}" th:method="GET">-->
+        <input type='submit' value='Create Student' id="btn1" onclick="showCreate()"/>
+<!--    </form>-->
+</section>
+
+<section id="create" style="display: none">
+    <form th:action="@{/CreateStudent}" th:method="POST">
+    <label for='username'>Username:</label><input id='username' type='text' name='username'/><br/>
+    <label for='password'>Password:</label><input id='password' type='password' name='password'/><br/>
+    <label for='name'>Name:</label><input id='name' type='text' name='name'/><br/>
+    <label for='surname'>Surname:</label><input id='surname' type='text' name='surname'/><br/>
+        <input type='submit' value='Add new student' onclick="hideCreate()"/>
+    </form>
+</section>
+
+<section>
+    <h2>Select the student to enroll:</h2>
+    <form th:action="@{/StudentEnrollmentSummary}" th:method="POST">
+
+        <div th:each="student: ${students}"> <input type="radio" name="student" th:value="${student.getUsername()}" th:text="${student.getName()}+' '+${student.getSurname()}"/> </div>
+        </br>
+        <input type='submit' value='Submit'/>
+    </form>
+
+
+<!--    <a href='/createStudent' type='button'>Create New Student</a> <br/> <br/>-->
+<!--    <input type="radio" name="size" value="petar.petrov"> Петар Петров <br/>-->
+<!--    <input type="radio" name="size" value="mile.milev"> Миле Милев <br/>-->
+<!--    <input type="radio" name="size" value="gjorgji.gjorgjiev"> Ѓорѓи Ѓорѓиев <br/>-->
+<!--    <br/>-->
+
+<!--    <a href="/StudentEnrollmentSummary">Submit</a>-->
+</section>
+
+<aside>
+    <table>
+        <tr>
+            <th colspan="2">
+                Your Enrollment Status
+            </th>
+        </tr>
+        <tr>
+            <td><b>Course Id</b></td>
+            <td><th:block th:text="${courseId}"></th:block></td>
+        </tr>
+    </table>
+</aside>
+
+</body>
+</html>
