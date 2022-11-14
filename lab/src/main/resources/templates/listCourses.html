@@ -30,8 +30,9 @@
                         </thead>
                         <tbody>
                         <form th:action="@{/courses/add-course}" th:method="GET">
-                            <input type='submit' value='Add a course'/>
+                            <tr><input type='submit' value='Add course'/></tr>
                         </form>
+
                         <form th:action="@{/AddStudent}" th:method="GET">
                             <tr><input type='submit' value='Select course'/></tr>
                             <tr th:each="course : ${courses}" class="product">
@@ -40,23 +41,23 @@
                                 <td th:text="${course.getDescription()}"></td>
                                 <td th:text="${course.getTeacher() != null}
                                 ? ${course.getTeacher().getName()} : 'No Teacher'"></td>
-                                <td class="text-right">
-                                    <th:block>
-                                        <form th:action="@{'/courses/delete/{id}' (id=${course.getCourseId()})}"
-                                              th:method="DELETE">
-                                            <button type="submit"
-                                                    class="btn btn-sm btn-danger delete-product">
-                                                <i class="fa fa-trash">Delete</i>
-                                            </button>
-                                        </form>
-                                    </th:block>
-                                    <th:block>
-                                        <a th:href="@{'/courses/edit-form/{id}' (id=${course.getCourseId()})}"
-                                           class="btn btn-sm btn-info edit-product">
-                                            <i class="fa fa-trash">Edit</i>
-                                        </a>
-                                    </th:block>
-                                </td>
+<!--                                <td class="text-right">-->
+<!--                                    <th:block>-->
+<!--                                        <form th:action="@{'/courses/delete/{id}' (id=${course.getCourseId()})}"-->
+<!--                                              th:method="DELETE">-->
+<!--                                            <button type="submit"-->
+<!--                                                    class="btn btn-sm btn-danger delete-product">-->
+<!--                                                <i class="fa fa-trash">Delete</i>-->
+<!--                                            </button>-->
+<!--                                        </form>-->
+<!--                                    </th:block>-->
+<!--                                    <th:block>-->
+<!--                                        <a th:href="@{'/courses/edit-form/{id}' (id=${course.getCourseId()})}"-->
+<!--                                           class="btn btn-sm btn-info edit-product">-->
+<!--                                            <i class="fa fa-trash">Edit</i>-->
+<!--                                        </a>-->
+<!--                                    </th:block>-->
+<!--                                </td>-->
                             </tr>
 
                         </form>

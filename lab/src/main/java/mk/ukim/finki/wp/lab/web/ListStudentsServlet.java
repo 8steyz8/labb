@@ -65,27 +65,6 @@ public class ListStudentsServlet extends HttpServlet {
 
            }
 
-//
-//
-//        //allStudents.stream().filter(x-> x.getUsername().equals(s.getUsername()))
-//
-//       if(enrolledStudents!=null && !(enrolledStudents.isEmpty()))
-//       {
-//           for (Student s:
-//                   enrolledStudents) {
-//               for (Student a:
-//                       allStudents) {
-//                   if(a.getUsername().equals(s.getUsername()))
-//                   {
-//                       allStudents.remove(s);
-//                   }
-//
-//               }
-//
-//           }
-//       }
-
-
 
         WebContext context=new WebContext(req,resp, req.getServletContext());
         context.setVariable("students",notEnrolled);
