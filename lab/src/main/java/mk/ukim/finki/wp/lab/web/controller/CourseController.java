@@ -29,7 +29,7 @@ public class CourseController {
         return "listCourses";
     }
 
-    @PostMapping("/add")
+    @PostMapping("/add-course")
     public String saveCourse(@RequestParam String name,
                              @RequestParam String description,
                              @RequestParam Long id){

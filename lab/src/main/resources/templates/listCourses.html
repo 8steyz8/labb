@@ -25,9 +25,13 @@
                             <th scope="col">Course name</th>
                             <th scope="col">Description</th>
                             <th scope="col">Teacher</th>
+                            <th scope="col">Choose action</th>
                         </tr>
                         </thead>
                         <tbody>
+                        <form th:action="@{/courses/add-course}" th:method="GET">
+                            <input type='submit' value='Add a course'/>
+                        </form>
                         <form th:action="@{/AddStudent}" th:method="GET">
                             <tr><input type='submit' value='Select course'/></tr>
                             <tr th:each="course : ${courses}" class="product">
@@ -64,7 +68,7 @@
     </div>
 </div>
 
-
+</html>
 <!--<!DOCTYPE html>-->
 <!--<html lang="mk" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">-->
 <!--<head>-->
