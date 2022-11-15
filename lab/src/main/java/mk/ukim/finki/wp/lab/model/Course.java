@@ -2,6 +2,7 @@ package mk.ukim.finki.wp.lab.model;
 
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -24,9 +25,10 @@ public class Course {
 
     public Course(String name, String description,Teacher teacher)
     {
+        this.courseId = (long) (Math.random()*1000);
         this.name=name;
         this.description=description;
         this.teacher=teacher;
-
+        students=new ArrayList<>();
     }
 }

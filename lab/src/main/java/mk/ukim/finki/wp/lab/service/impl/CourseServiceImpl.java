@@ -25,9 +25,10 @@ public class CourseServiceImpl implements CourseService {
 
     private TeacherService teacherService;
 
-    public CourseServiceImpl(CourseRepository courseRepository, StudentService studentService) {
+    public CourseServiceImpl(CourseRepository courseRepository,TeacherService teacherService, StudentService studentService) {
         this.courseRepository = courseRepository;
         this.studentService = studentService;
+        this.teacherService=teacherService;
     }
 
     @Override

@@ -10,7 +10,9 @@ import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/courses")
@@ -32,20 +34,11 @@ public class CourseController {
             model.addAttribute("error", error);
         }
 
-        model.addAttribute("courses",courseService.listAll());
+
+        List<Course> list = courseService.listAll().stream().sorted(Comparator.comparing(Course::getName)).collect(Collectors.toList());
+        model.addAttribute("courses",list);
         return "listCourses";
     }
-//    @GetMapping("/courses/edit-form/{id}")
-//    public String getEditCoursePage(@PathVariable Long id, Model model){
-//        if(this.courseService.getCourse(id).isPresent()){
-//            Course course = this.courseService.getCourse(id).get();
-//            List<Teacher> teachers = this.teacherService.findAll();
-//            model.addAttribute("teachers", teachers);
-//            return "add-product";
-//        }
-//        return "redirect:/courses?error=CourseNotFound";
-//
-//    }
 
     @GetMapping("/add-course")
     public String getAddCoursePage(Model model){
@@ -54,7 +47,7 @@ public class CourseController {
         return "add-course";
     }
 
-    @PostMapping("/add-course")
+    @PostMapping("/added-course")
     public String saveCourse(@RequestParam String name,
                              @RequestParam String description,
                              @RequestParam Long id){
@@ -68,9 +61,22 @@ public class CourseController {
         return "redirect:/courses";
     }
 
-    @DeleteMapping("/delete/{id}") // vaka e so path variable
+    @GetMapping("/delete/{id}") // vaka e so path variable
     public String deleteCourseById(@PathVariable Long id) {
         courseService.deleteCourseById(id);
         return "redirect:/courses";
+    }
+
+    @GetMapping("/edit-form/{id}")
+    public String getEditCoursePage(@PathVariable Long id, Model model){
+        if(this.courseService.getCourse(id)!=null){
+            Course course = this.courseService.getCourse(id);
+            List<Teacher> teachers = this.teacherService.findAll();
+            model.addAttribute("course", course);
+            model.addAttribute("teachers", teachers);
+            return "add-course";
+        }
+        return "redirect:/courses?error=CourseNotFound";
+
     }
 }

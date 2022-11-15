@@ -12,6 +12,7 @@
     <section class="jumbotron text-center">
         <div class="container">
             <h1 class="jumbotron-heading">COURSES</h1>
+            <h3 class="jumbotron-heading">Select your course</h3>
         </div>
     </section>
 
@@ -40,24 +41,22 @@
                                 <td th:text="${course.getName()}"></td>
                                 <td th:text="${course.getDescription()}"></td>
                                 <td th:text="${course.getTeacher() != null}
-                                ? ${course.getTeacher().getName()} : 'No Teacher'"></td>
-<!--                                <td class="text-right">-->
-<!--                                    <th:block>-->
-<!--                                        <form th:action="@{'/courses/delete/{id}' (id=${course.getCourseId()})}"-->
-<!--                                              th:method="DELETE">-->
-<!--                                            <button type="submit"-->
-<!--                                                    class="btn btn-sm btn-danger delete-product">-->
-<!--                                                <i class="fa fa-trash">Delete</i>-->
-<!--                                            </button>-->
-<!--                                        </form>-->
-<!--                                    </th:block>-->
-<!--                                    <th:block>-->
-<!--                                        <a th:href="@{'/courses/edit-form/{id}' (id=${course.getCourseId()})}"-->
-<!--                                           class="btn btn-sm btn-info edit-product">-->
-<!--                                            <i class="fa fa-trash">Edit</i>-->
-<!--                                        </a>-->
-<!--                                    </th:block>-->
-<!--                                </td>-->
+                                ? ${course.getTeacher().getName()} + ' ' + ${course.getTeacher().getSurname()} : 'No Teacher'"></td>
+                                <td class="text-right">
+                                    <th:block>
+                                        <a th:href="@{'/courses/delete/{id}' (id=${course.getCourseId()})}"
+                                                    class="btn btn-sm btn-danger delete-product">
+                                                <i class="fa fa-trash">Delete</i>
+
+                                        </a>
+                                    </th:block>
+                                    <th:block>
+                                        <a th:href="@{'/courses/edit-form/{id}' (id=${course.getCourseId()})}"
+                                           class="btn btn-sm btn-info edit-product">
+                                            <i class="fa fa-trash">Edit</i>
+                                        </a>
+                                    </th:block>
+                                </td>
                             </tr>
 
                         </form>

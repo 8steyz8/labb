@@ -22,7 +22,8 @@ public class AppFilter implements Filter {
 
         String path = request.getServletPath();
 
-        if (!"/AddStudent".equals(path) &&!"/courses".equals(path) && !"/main.css".equals(path) && !"/courses/add-course".equals(path)) {
+        if (!"/AddStudent".equals(path) && !"/main.css".equals(path) && !"/courses/add-course".equals(path) && !"/courses/added-course".equals(path)
+                && !path.contains("/courses")) {
             response.sendRedirect("/courses?error=CourseNotSelected");
         } else {
             filterChain.doFilter(servletRequest,servletResponse);

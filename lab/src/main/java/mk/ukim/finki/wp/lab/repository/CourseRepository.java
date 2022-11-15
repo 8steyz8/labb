@@ -37,7 +37,7 @@ public class CourseRepository {
     public Course save(String name, String description, Teacher teacher)
     {
         //ako postoi kurs so toa ime i toj profesor izbrisi go
-        CourseDataHolder.courses.removeIf(c->c.getName().equals(name) && c.getTeacher().getId().equals(teacher.getId()));
+        CourseDataHolder.courses.removeIf(c->c.getName().equals(name));
 
         Course c= new Course(name,description,teacher);
         CourseDataHolder.courses.add(c);
