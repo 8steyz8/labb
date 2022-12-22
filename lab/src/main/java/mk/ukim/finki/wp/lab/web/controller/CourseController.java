@@ -56,7 +56,7 @@ public class CourseController {
     @PostMapping("/added-course")
     public String saveCourse(@RequestParam String name,
                              @RequestParam String description,
-                             @RequestParam Long id) {
+                             @RequestParam Long id){
         try {
             courseService.saveCourse(name, description, id);
         } catch (RuntimeException exception) {
@@ -74,14 +74,22 @@ public class CourseController {
 
     @GetMapping("/edit-form/{id}")
     public String getEditCoursePage(@PathVariable Long id, Model model) {
-        if (this.courseService.getCourse(id).isPresent()) {
-            Optional<Course> course = this.courseService.getCourse(id);
+
+        Course c = courseService.getCourse(id).get();
+
+        if (this.courseService.listAll().contains(c)) { // ako vo listata go ima id-to
+
+            courseService.deleteById(id);
+
+            //Course course = this.courseService.findCourseById(id).get();
             List<Teacher> teachers = this.teacherService.findAll();
-            model.addAttribute("course", course);
+
+            model.addAttribute("course", c);
             model.addAttribute("teachers", teachers);
+
             return "add-course";
         }
         return "redirect:/courses?error=CourseNotFound";
-
     }
+
 }

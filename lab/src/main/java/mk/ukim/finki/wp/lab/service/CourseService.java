@@ -13,7 +13,7 @@ public interface CourseService {
     List<Course> listAll();
     Optional<Course> getCourse(Long courseId);
 
-    Course saveCourse(String name,String description, long teacherId);
+    Course saveCourse(String name, String description, long teacherId);
 
     void deleteById(Long courseId);
 }

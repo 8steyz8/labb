@@ -33,7 +33,7 @@ private List<Student> students;
                            class="form-control"
                            id="name"
                            name="name"
-                           th:value="(${course} != null ? ${course.get().getName()} : '')"
+                           th:value="(${course} != null ? ${course.getName()} : '')"
                            required
                            placeholder="Enter course name">
                 </div>
@@ -43,14 +43,14 @@ private List<Student> students;
                            class="form-control"
                            id="description"
                            name="description"
-                           th:value="(${course} != null ? ${course.get().getDescription()} : '')"
+                           th:value="(${course} != null ? ${course.getDescription()} : '')"
                            placeholder="Description">
                 </div>
                 <div class="form-group">
                     <label>Teacher</label>
                     <select name="id" class="form-control">
                         <option th:if="${course} != null"
-                                th:selected="${course.get().getTeacher() != null && course.get().getTeacher().getId() == teacher.getId()}"
+                                th:selected="${course.getTeacher() != null && course.getTeacher().getId() == teacher.getId()}"
                                 th:each="teacher : ${teachers}"
                                 th:value="${teacher.getId()}"
                                 th:text="${teacher.getName()}">
