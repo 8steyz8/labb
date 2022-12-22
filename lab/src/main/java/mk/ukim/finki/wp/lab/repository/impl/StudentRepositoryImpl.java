@@ -1,4 +1,4 @@
-package mk.ukim.finki.wp.lab.repository;
+package mk.ukim.finki.wp.lab.repository.impl;
 
 import mk.ukim.finki.wp.lab.bootstrap.StudentDataHolder;
 import mk.ukim.finki.wp.lab.model.Student;
@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Repository
-public class StudentRepository {
+public class StudentRepositoryImpl {
 
     public List<Student> findAllStudents() {
         return StudentDataHolder.students;

@@ -1,7 +1,7 @@
 package mk.ukim.finki.wp.lab.service.impl;
 
 import mk.ukim.finki.wp.lab.model.Student;
-import mk.ukim.finki.wp.lab.repository.StudentRepository;
+import mk.ukim.finki.wp.lab.repository.jpa.StudentRepository;
 import mk.ukim.finki.wp.lab.service.StudentService;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 public class StudentServiceImpl implements StudentService {
 
-  private  StudentRepository studentRepository;
+  private StudentRepository studentRepository;
 
     public StudentServiceImpl(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
@@ -20,13 +20,13 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public List<Student> listAll() {
 
-        return studentRepository.findAllStudents();
+        return studentRepository.findAll();
     }
 
     @Override
     public List<Student> searchByNameOrSurname(String text) {
 
-        return studentRepository.findAllByNameOrSurname(text);
+        return studentRepository.findAllByNameOrSurname(text,text);
     }
 
     @Override
@@ -37,8 +37,9 @@ public class StudentServiceImpl implements StudentService {
         {
             throw new IllegalArgumentException();
         }
-        studentRepository.findAllStudents().removeIf(r->r.getUsername().equals(username));
-        studentRepository.findAllStudents().add(s);
+        studentRepository.findAll().removeIf(r->r.getUsername().equals(username));
+        studentRepository.save(s);
+
         return s;
     }
 }

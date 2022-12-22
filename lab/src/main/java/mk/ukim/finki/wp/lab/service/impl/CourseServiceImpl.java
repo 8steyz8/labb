@@ -1,59 +1,75 @@
 package mk.ukim.finki.wp.lab.service.impl;
 
-        import mk.ukim.finki.wp.lab.bootstrap.CourseDataHolder;
         import mk.ukim.finki.wp.lab.model.Course;
         import mk.ukim.finki.wp.lab.model.Student;
         import mk.ukim.finki.wp.lab.model.Teacher;
         import mk.ukim.finki.wp.lab.model.exceptions.InvalidArgumentsException;
+        import mk.ukim.finki.wp.lab.model.exceptions.NoSuchElementException;
         import mk.ukim.finki.wp.lab.model.exceptions.NoSuchTeacherException;
-        import mk.ukim.finki.wp.lab.repository.CourseRepository;
+        import mk.ukim.finki.wp.lab.repository.jpa.CourseRepository;
+        import mk.ukim.finki.wp.lab.repository.jpa.StudentRepository;
+        import mk.ukim.finki.wp.lab.repository.jpa.TeacherRepository;
         import mk.ukim.finki.wp.lab.service.CourseService;
-        import mk.ukim.finki.wp.lab.service.StudentService;
-        import mk.ukim.finki.wp.lab.service.TeacherService;
         import org.springframework.stereotype.Service;
 
+        import javax.transaction.Transactional;
         import java.util.List;
-        import java.util.stream.Collectors;
+        import java.util.Optional;
 
- //biznis logikata
+//biznis logikata
 @Service
 public class CourseServiceImpl implements CourseService {
 
     //injection
-    private CourseRepository courseRepository;
-    private StudentService studentService;
+    private final CourseRepository courseRepository;
+    private final StudentRepository studentRepository;
 
-    private TeacherService teacherService;
+    private final TeacherRepository teacherRepository;
 
-    public CourseServiceImpl(CourseRepository courseRepository,TeacherService teacherService, StudentService studentService) {
+    public CourseServiceImpl(CourseRepository courseRepository, TeacherRepository teacherRepository, StudentRepository studentRepository) {
         this.courseRepository = courseRepository;
-        this.studentService = studentService;
-        this.teacherService=teacherService;
+        this.studentRepository = studentRepository;
+        this.teacherRepository=teacherRepository;
     }
 
-    @Override
-    public List<Student> listStudentsByCourse(Long courseId) {
+     @Override
+     public List<Student> listStudentsByCourse(Long courseId) {
+         try {
+             return this.findAllStudentsByCourse(courseId);
+         }catch (NoSuchElementException exception){
+             System.out.println("Course ID "+ courseId+" doesn't exist.");
+         }
+         return null;
+     }
 
-        return courseRepository.findAllStudentsByCourse(courseId);
-    }
+     public List<Student> findAllStudentsByCourse(Long courseId){
+         Course course = courseRepository.findById(courseId).orElseThrow(NoSuchElementException::new);
+         return course.getStudents();
+     }
 
-    @Override
-    public Course addStudentInCourse(String username, Long courseId) {
-
-        Student studentX=(Student) studentService.listAll().stream().filter(y->y.getUsername().equals(username)).collect(Collectors.toList()).get(0);
-        Course courseX=courseRepository.findById(courseId);
-        return courseRepository.addStudentToCourse(studentX,courseX);
-    }
-
+     @Override
+     @Transactional
+     public Course addStudentInCourse(String username, Long courseId) {
+         Student student = studentRepository.findById(username)
+                 .orElseThrow(NoSuchElementException::new);
+         Optional<Course> byId = courseRepository.findById(courseId);
+         if (byId.isPresent()) {
+             Course course = byId.get();
+             course.addStudent(student);
+             courseRepository.save(course);
+         }
+         return null;
+     }
     @Override
     public List<Course> listAll() {
-        return courseRepository.findAllCourses();
+        return courseRepository.findAll();
     }
 
     @Override
-    public Course getCourse(Long courseId) {
-        return courseRepository.findById(Long.valueOf(courseId));
+    public Optional<Course> getCourse(Long courseId) {
+        return courseRepository.findById(courseId);
     }
+
 
      @Override
      public Course saveCourse(String name, String description, long teacherId) {
@@ -61,15 +77,19 @@ public class CourseServiceImpl implements CourseService {
         {
             throw new InvalidArgumentsException();
         }
-        Teacher teacher = teacherService.findById(teacherId).orElseThrow(NoSuchTeacherException::new);
+        Teacher teacher = teacherRepository.findById(teacherId).orElseThrow(NoSuchTeacherException::new);
 
-        return courseRepository.save(name,description,teacher);
+        Course course= new Course(name,description,teacher);
+
+        return courseRepository.save(course);
      }
 
      @Override
-     public void deleteCourseById(Long courseId) {
-         CourseDataHolder.courses.removeIf(c->c.getCourseId().equals(courseId));
+     public void deleteById(Long courseId) {
+         courseRepository.deleteById(courseId);
      }
+
+
 
 
  }

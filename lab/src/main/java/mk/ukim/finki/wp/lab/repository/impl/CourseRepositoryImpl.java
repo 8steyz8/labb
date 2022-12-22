@@ -1,12 +1,9 @@
-package mk.ukim.finki.wp.lab.repository;
+package mk.ukim.finki.wp.lab.repository.impl;
 
 import mk.ukim.finki.wp.lab.bootstrap.CourseDataHolder;
 import mk.ukim.finki.wp.lab.model.Course;
 import mk.ukim.finki.wp.lab.model.Student;
 import mk.ukim.finki.wp.lab.model.Teacher;
-import mk.ukim.finki.wp.lab.model.exceptions.InvalidArgumentsException;
-import mk.ukim.finki.wp.lab.model.exceptions.NoSuchTeacherException;
-import mk.ukim.finki.wp.lab.service.TeacherService;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -15,7 +12,7 @@ import java.util.Optional;
 
 //funkcii so koi se barata so data
 @Repository
-public class CourseRepository {
+public class CourseRepositoryImpl {
 
 
     public List<Course> findAllCourses() {

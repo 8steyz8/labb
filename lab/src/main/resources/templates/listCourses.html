@@ -30,6 +30,11 @@
                         </tr>
                         </thead>
                         <tbody>
+
+                        <form  th:action="@{/courses/reversed}" th:method="GET">
+                            <tr><input type='submit' value='Shuffle courses' class="shuffle"/></tr>
+                        </form>
+
                         <form th:action="@{/courses/add-course}" th:method="GET">
                             <tr><input type='submit' value='Add course'/></tr>
                         </form>
@@ -61,6 +66,8 @@
 
                         </form>
                         </tbody>
+
+
                     </table>
                 </div>
             </div>
