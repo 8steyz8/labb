@@ -2,7 +2,6 @@ package mk.ukim.finki.wp.lab.model;
 
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -30,7 +29,7 @@ public class Grade {
         this.timestamp = timestamp;
     }
 
-    public Grade() {
+    public Grade(LocalDateTime timestamp, Character c, Course course, Student student) {
 
     }
 }
