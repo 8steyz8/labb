@@ -73,11 +73,11 @@ public class StudentEnrollmentSummaryController {
         model.addAttribute("students",courseService.listStudentsByCourse(chosenCourseId));
         List<Student> students = courseService.listStudentsByCourse(chosenCourseId);
 
-        //List<Grade> listGrades=students.stream().map(s->gradeService.findByUsernameAndCourse(s.getUsername(),chosenCourseId)).collect(Collectors.toList());
-//        students.forEach(s->{
-//            map.put(s.getUsername(), gradeService.findByUsernameAndCourse(s.getUsername(), chosenCourseId));
-//        });
-//        model.addAttribute("grades",map);
+//        List<Grade> listGrades=students.stream().map(s->gradeService.findByUsernameAndCourse(s.getUsername(),chosenCourseId)).collect(Collectors.toList());
+        students.forEach(s->{
+            map.put(s.getUsername(), gradeService.findByUsernameAndCourse(s.getUsername(), chosenCourseId));
+        });
+        model.addAttribute("grades",map);
         model.addAttribute("bodyContent","studentsInCourse");
 
 
