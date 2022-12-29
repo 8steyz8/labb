@@ -14,9 +14,7 @@ public interface GradeService {
 
     Grade save(LocalDateTime timestamp, String grade, Course course, String studentId);
 
-    void deleteById(Long id);
-
     Optional<Grade> getGrade(Long id);
 
-    void save(Long id, String grade, LocalDateTime timestamp);
+    Grade findByUsernameAndCourse(String username, Long id);
 }

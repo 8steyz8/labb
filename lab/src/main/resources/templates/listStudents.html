@@ -1,54 +1,4 @@
-<html lang="mk" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="utf-8">
-    <title>Add new Student to Course</title>
-    <style type = "text/css">
-        body {
-            width: 800px;
-            margin: auto;
-        }
-        table {
-            width:100%;
-        }
-        table, td, th {
-            border: 1px solid black;
-            padding:3px 2px;
-        }
-        section {
-            float: left;
-            margin: 0 1.5%;
-            width: 63%;
-        }
-        aside {
-            float: right;
-            margin: 0 1.5%;
-            width: 30%;
-        }
-
-
-    </style>
-
-    <script>
-
-        $(document).ready( function() {
-            document.getElementById("create").style.display="none";
-        });
-        function showCreate(){
-            document.getElementById("create").style.display= "block";
-
-        }
-        function hideCreate()
-        {
-            document.getElementById("create").style.display= "none";
-        }
-
-    </script>
-
-</head>
-<body>
-<header>
-    <h1>Student Enrollment - Select the Student </h1>
-</header>
+<div class="container mb-4" xmlns:th="http://www.thymeleaf.org">
 <section>
 <!--    <form th:action="@{/CreateStudent}" th:method="GET">-->
         <input type='submit' value='Create Student' id="btn1" onclick="showCreate()"/>
@@ -70,7 +20,7 @@
     <form th:action="@{/StudentEnrollmentSummary}" th:method="POST">
 
         <div th:each="student: ${students}"> <input type="radio" name="student" th:value="${student.getUsername()}" th:text="${student.getName()}+' '+${student.getSurname()}"/> </div>
-        </br>
+
         <input type='submit' value='Submit'/>
     </form>
 
@@ -98,5 +48,5 @@
     </table>
 </aside>
 
-</body>
-</html>
+</div>
+

@@ -34,24 +34,8 @@ public class GradeController {
 
         req.getSession().setAttribute("student", studentId);
         /*        model.addAttribute("grade", grade);*/
-        return "add-grade";
-    }
-
-    @GetMapping("/delete/{id}")
-    public String deleteCourse(@PathVariable Long id){
-        this.gradeService.deleteById(id);
-        return "redirect:/StudentEnrollmentSummary";
-    }
-
-    @GetMapping("/edit-form/{id}")
-    public String getEditCoursePage(@PathVariable Long id, Model model){
-        if(this.gradeService.getGrade(id).isPresent()){
-            Grade grade = this.gradeService.getGrade(id).get();
-            model.addAttribute("grade", grade);
-            return "add-grade";
-        }
-        return "redirect:/StudentEnrollmentSummary";
-
+        model.addAttribute("bodyContent","add-grade");
+        return "master-template";
     }
 
     @PostMapping
@@ -61,14 +45,11 @@ public class GradeController {
                                LocalDateTime timestamp,
                                @RequestParam(required = false) Long id,
                                HttpServletRequest req){
-        if (id != null){
-            Grade grade1 = gradeService.getGrade(id).get();
-            gradeService.save(id, grade, timestamp);
-        }else {
+
             Course course = (Course) req.getSession().getAttribute("course");
             String studentUsername = (String) req.getSession().getAttribute("student");
             gradeService.save(timestamp, grade, course, studentUsername);
-        }
+
 
         return "redirect:/StudentEnrollmentSummary";
     }

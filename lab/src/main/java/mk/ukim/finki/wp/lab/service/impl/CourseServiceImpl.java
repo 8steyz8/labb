@@ -3,9 +3,7 @@ package mk.ukim.finki.wp.lab.service.impl;
         import mk.ukim.finki.wp.lab.model.Course;
         import mk.ukim.finki.wp.lab.model.Student;
         import mk.ukim.finki.wp.lab.model.Teacher;
-        import mk.ukim.finki.wp.lab.model.exceptions.InvalidArgumentsException;
-        import mk.ukim.finki.wp.lab.model.exceptions.NoSuchElementException;
-        import mk.ukim.finki.wp.lab.model.exceptions.NoSuchTeacherException;
+        import mk.ukim.finki.wp.lab.model.exceptions.*;
         import mk.ukim.finki.wp.lab.repository.jpa.CourseRepository;
         import mk.ukim.finki.wp.lab.repository.jpa.StudentRepository;
         import mk.ukim.finki.wp.lab.repository.jpa.TeacherRepository;
@@ -84,12 +82,22 @@ public class CourseServiceImpl implements CourseService {
         return courseRepository.save(course);
      }
 
+
      @Override
      public void deleteById(Long courseId) {
          courseRepository.deleteById(courseId);
      }
 
+    @Override
+    public Course saveCourse2(Course course, long id) {
+        if(course.getName().isEmpty())
+            throw new NoCourseNameException();
+        if(course.getDescription().isEmpty())
+            throw new NoDescException();
+        Teacher teacher = teacherRepository.findById(id).orElseThrow(NoSuchTeacherException::new);
+        course.setTeacher(teacher);
+        return courseRepository.save(course);
+    }
 
 
-
- }
+}

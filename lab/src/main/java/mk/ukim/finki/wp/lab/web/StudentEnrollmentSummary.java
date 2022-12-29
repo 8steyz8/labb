@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(urlPatterns = "/StudentEnrollmentSummary")
+@WebServlet(urlPatterns = "/StudentEnrollmentSummary1")
 public class StudentEnrollmentSummary extends HttpServlet {
 
     public final SpringTemplateEngine springTemplateEngine;
@@ -29,7 +29,13 @@ public class StudentEnrollmentSummary extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.sendRedirect("/listCourses");
+        long chosenCourseId = (long) req.getSession().getAttribute("chosenCourse");
+
+        WebContext context=new WebContext(req,resp,req.getServletContext());
+        context.setVariable("courseName",courseService.getCourse(chosenCourseId));
+        context.setVariable("students",courseService.listStudentsByCourse(chosenCourseId));
+        context.setVariable("bodyContent","studentsInCourse");
+        this.springTemplateEngine.process("master-template", context, resp.getWriter());
     }
 
     @Override
@@ -51,7 +57,7 @@ public class StudentEnrollmentSummary extends HttpServlet {
         WebContext context=new WebContext(req,resp,req.getServletContext());
         context.setVariable("courseName",courseService.getCourse(chosenCourseId));
         context.setVariable("students",courseService.listStudentsByCourse(chosenCourseId));
-
-        this.springTemplateEngine.process("studentsInCourse.html", context, resp.getWriter());
+        context.setVariable("bodyContent","studentsInCourse");
+        springTemplateEngine.process("master-template.html",context,resp.getWriter());
     }
 }

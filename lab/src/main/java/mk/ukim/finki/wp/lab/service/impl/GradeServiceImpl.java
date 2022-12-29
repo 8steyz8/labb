@@ -55,24 +55,16 @@ public class GradeServiceImpl implements GradeService {
     }
 
     @Override
-    public void deleteById(Long id) {
-        gradeRepository.deleteById(id);
-    }
-
-    @Override
     public Optional<Grade> getGrade(Long id) {
         return gradeRepository.findById(id);
     }
 
     @Override
-    public void save(Long id, String grade, LocalDateTime timestamp) {
-        Grade gradeObj = gradeRepository.findById(id).orElseThrow(NoSuchElementException::new);
-        if (grade.length()>1){
-            throw new NoSuchElementException();
-        }
-        gradeObj.setGrade(grade.charAt(0));
-        gradeObj.setTimestamp(timestamp);
-        gradeRepository.save(gradeObj);
+    public Grade findByUsernameAndCourse(String username, Long id) {
+        Student student = studentRepository.findById(username).orElseThrow(NoSuchElementException::new);
+        Course course= courseRepository.findById(id).orElseThrow(NoSuchElementException::new);
+        return gradeRepository.findByStudentAndCourse(student,course);
     }
+
 
 }

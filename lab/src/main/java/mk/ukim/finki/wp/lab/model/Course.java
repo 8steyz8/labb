@@ -48,6 +48,11 @@ public class Course {
 
     }
 
+    public Course(String name, String description) {
+        this.name=name;
+        this.description=description;
+    }
+
     public void addStudent(Student student) {
         students.removeIf(s->s.getUsername().equals(student.getUsername()));
         students.add(student);

@@ -36,14 +36,16 @@ public class CourseController {
         }
         List<Course> list = courseService.listAll().stream().sorted(Comparator.comparing(Course::getName)).collect(Collectors.toList());
         model.addAttribute("courses", list);
-        return "listCourses";
+        model.addAttribute("bodyContent","listCourses");
+        return "master-template";
     }
 
     @GetMapping("/add-course")
     public String getAddCoursePage(Model model) {
         List<Teacher> teachers = this.teacherService.findAll();
         model.addAttribute("teachers", teachers);
-        return "add-course";
+        model.addAttribute("bodyContent","add-course");
+        return "master-template";
     }
 
 
@@ -51,7 +53,8 @@ public class CourseController {
     public String shuffle(Model model) {
         List<Course> list = courseService.listAll().stream().sorted(Comparator.comparing(Course::getName).reversed()).collect(Collectors.toList());
         model.addAttribute("courses", list);
-        return "reversed";
+        model.addAttribute("bodyContent","reversed");
+        return "master-template";
     }
 
     @PostMapping("/added-course")
@@ -88,7 +91,8 @@ public class CourseController {
             model.addAttribute("course", c);
             model.addAttribute("teachers", teachers);
 
-            return "add-course";
+            model.addAttribute("bodyContent","add-course");
+            return "master-template";
         }
         return "redirect:/courses?error=CourseNotFound";
     }

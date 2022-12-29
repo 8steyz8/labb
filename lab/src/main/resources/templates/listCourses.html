@@ -1,14 +1,6 @@
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8"/>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-</head>
 
 
-<div xmlns:th="http://www.thymeleaf.org">
+<div class="container mb-4" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
     <section class="jumbotron text-center">
         <div class="container">
             <h1 class="jumbotron-heading">COURSES</h1>
@@ -22,40 +14,50 @@
                     <table class="table table-striped">
                         <thead>
                         <tr>
+                            <th:block sec:authorize="hasRole('ROLE_ADMIN')">
                             <th scope="col">Selection</th>
+                            </th:block>
                             <th scope="col">Course name</th>
                             <th scope="col">Description</th>
                             <th scope="col">Teacher</th>
+                            <th:block sec:authorize="hasRole('ROLE_ADMIN')">
                             <th scope="col">Choose action</th>
+                            </th:block>
                         </tr>
                         </thead>
                         <tbody>
-
+                        <th:block sec:authorize="hasRole('ROLE_ADMIN')">
                         <form  th:action="@{/courses/reversed}" th:method="GET">
                             <tr><input type='submit' value='Shuffle courses' class="shuffle"/></tr>
-                        </form>
+                        </form></th:block>
 
+                            <th:block sec:authorize="hasRole('ROLE_ADMIN')">
                         <form th:action="@{/courses/add-course}" th:method="GET">
                             <tr><input type='submit' value='Add course'/></tr>
-                        </form>
+                        </form></th:block>
+
 
                         <form th:action="@{/AddStudent}" th:method="GET">
+                            <th:block sec:authorize="hasRole('ROLE_ADMIN')">
                             <tr><input type='submit' value='Select course'/></tr>
+                            </th:block>
                             <tr th:each="course : ${courses}" class="product">
+                                <th:block sec:authorize="hasRole('ROLE_ADMIN')">
                                 <td><input type="radio" name="courseId" th:value="${course.getCourseId()}"/></td>
+                                </th:block>
                                 <td th:text="${course.getName()}"></td>
                                 <td th:text="${course.getDescription()}"></td>
                                 <td th:text="${course.getTeacher() != null}
                                 ? ${course.getTeacher().getName()} + ' ' + ${course.getTeacher().getSurname()} : 'No Teacher'"></td>
                                 <td class="text-right">
-                                    <th:block>
+                                    <th:block sec:authorize="hasRole('ROLE_ADMIN')">
                                         <a th:href="@{'/courses/delete/{id}' (id=${course.getCourseId()})}"
                                                     class="btn btn-sm btn-danger delete-product">
                                                 <i class="fa fa-trash">Delete</i>
 
                                         </a>
                                     </th:block>
-                                    <th:block>
+                                    <th:block sec:authorize="hasRole('ROLE_ADMIN')">
                                         <a th:href="@{'/courses/edit-form/{id}' (id=${course.getCourseId()})}"
                                            class="btn btn-sm btn-info edit-product">
                                             <i class="fa fa-trash">Edit</i>
@@ -75,7 +77,7 @@
     </div>
 </div>
 
-</html>
+
 <!--<!DOCTYPE html>-->
 <!--<html lang="mk" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">-->
 <!--<head>-->

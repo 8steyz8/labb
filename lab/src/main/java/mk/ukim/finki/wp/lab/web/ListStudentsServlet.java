@@ -1,6 +1,7 @@
 package mk.ukim.finki.wp.lab.web;
 
 
+import mk.ukim.finki.wp.lab.model.Course;
 import mk.ukim.finki.wp.lab.model.Student;
 import mk.ukim.finki.wp.lab.service.CourseService;
 import mk.ukim.finki.wp.lab.service.StudentService;
@@ -15,8 +16,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-@WebServlet(urlPatterns = "/AddStudent")
+@WebServlet(urlPatterns = "/AddStudentsd")
 public class ListStudentsServlet extends HttpServlet {
 
     public final StudentService studentService;
@@ -35,6 +37,10 @@ public class ListStudentsServlet extends HttpServlet {
 
         String courseId = req.getParameter("courseId");
         req.getSession().setAttribute("chosenCourse",Long.valueOf(courseId) );
+
+        Optional<Course> course = courseService.getCourse(Long.valueOf(courseId));
+
+        req.getSession().setAttribute("course",course.get());
 
         if (req.getSession().getAttribute("chosenCourse") == null) {
             resp.sendRedirect("/listCourses");
@@ -73,8 +79,8 @@ public class ListStudentsServlet extends HttpServlet {
        // context.setVariable("enrolled",enrolledStudents);
         //context.setVariable("EnrolledStudents",courseService.listStudentsByCourse(Long.valueOf(courseId)));
         context.setVariable("courseId", courseId);
-
-        springTemplateEngine.process("listStudents.html",context,resp.getWriter());
+        context.setVariable("bodyContent","listStudents");
+        springTemplateEngine.process("master-template.html",context,resp.getWriter());
 
     }
 

@@ -1,15 +1,4 @@
-<html lang="en"
-      xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
-<head>
-  <meta charset="UTF-8"/>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-</head>
-
-
+<div class="container mb-4" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <div xmlns:th="http://www.thymeleaf.org">
   <section class="jumbotron text-center">
     <div class="container">
@@ -19,8 +8,6 @@
     </div>
   </section>
 
-
-<div class="container mb-4">
   <div class="row">
     <div class="col-12" th:if="${students.size() > 0}">
       <div class="table-responsive">
@@ -32,7 +19,6 @@
             <th scope="col">Surname</th>
             <th scope="col">Grade</th>
             <th scope="col">Grade Entered At</th>
-            <th scope="col">Choose Action</th>
 
           </tr>
           </thead>
@@ -42,25 +28,14 @@
             <td th:text="${student.getUsername()}"></td>
             <td th:text="${student.getName()}"></td>
             <td th:text="${student.getSurname()}"></td>
-<!--            <td th:if="${grades.containsKey(student.getUsername())}"-->
-<!--                th:text="${grades.get(student.getUsername()).getGrade()}"></td>-->
+<!--            <tr th:text="${grades.get(students)}">-->
 
-<!--            <td th:if="${!grades.containsKey(student.getUsername())}">-->
-<!--              No Grade-->
-<!--            </td>-->
-
-<!--            <td th:if="${grades.containsKey(student.getUsername())}"-->
-<!--                th:text="${grades.get(student.getUsername()).getTimestamp()}"></td>-->
-
-<!--            <td th:if="${!grades.containsKey(student.getUsername())}">-->
-<!--              No date-->
-<!--            </td>-->
 
             <td class="text-right">
               <!--http://localhost:8080/AddStudent?_method=DELETE-->
               <th:block>
 <!--                      th:if="${!grades.containsKey(student.getUsername())}">-->
-                <a th:href="@{'/createGrade/{studentId}' (studentId=${student.getUsername()})}"
+                <a th:href="@{'/add-grade/{studentId}' (studentId=${student.getUsername()})}"
                    class="btn btn-secondary">
                   <i class="fa fa-trash">Add Grade</i>
                 </a>
@@ -73,31 +48,14 @@
           </tr>
           </tbody>
         </table>
-
-
-        </tbody>
-        </table>
       </div>
     </div>
   </div>
   <div>
-    <a th:href="@{'/AddStudent'}"
+    <a th:href="@{'/courses'}"
        class="btn btn-sm btn-info">
       <i class="fa fa-trash">Back</i>
     </a>
   </div>
 </div>
 </div>
-
-<!--<section>-->
-<!--  <div><h1><th:block th:text="${courseName.get().getName()}"></th:block></h1></div>-->
-<!--  <ul>-->
-<!--    <li th:each="student : ${students}" th:text=" ${student.getName()}+' '+${student.getSurname()}+' '+${student.getName().toLowerCase()}+'.'+${student.getSurname().toLowerCase()}"></li>-->
-<!--    &lt;!&ndash;    <li>Петар Петров (petar.petrov)</li>&ndash;&gt;-->
-<!--    &lt;!&ndash;    <li>Јован Јованов (jovan.jovanov)</li>&ndash;&gt;-->
-<!--  </ul>-->
-<!--  <a href="/courses">Back</a>-->
-<!--</section>-->
-
-</body>
-</html>

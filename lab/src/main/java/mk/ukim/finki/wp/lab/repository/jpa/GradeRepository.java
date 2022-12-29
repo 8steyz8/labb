@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface GradeRepository extends JpaRepository<Grade,Long>{
-    Grade findByStudentAndCourse(Student username, Course course);
+    Grade findByStudentAndCourse(Student username, Course courseid);
 }
 
 
